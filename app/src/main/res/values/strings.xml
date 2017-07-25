@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Simple Calculator Taxi</string>
+    <string name="distance">Пробег</string>
+    <string name="money">Доход</string>
+    <string name="fuel">Расход топлива</string>
+    <string name="cost_fuel">Стоимость топлива</string>
+    <string name="calculate">Просчитать</string>
+    <string name="text_for_income">Доход без комиссии</string>
+    <string name="text_for_clear_income">Чистая прибыль</string>
+    <string name="expense_on_gasoline">Затраты на бензин</string>
+    <string name="comission">Комиссия приложения</string>
+    <string name="cancel">Сбросить</string>
+    <string name="save">Сохранить</string>
+</resources>

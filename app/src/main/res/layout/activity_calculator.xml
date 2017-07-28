@@ -112,121 +112,110 @@
         android:layout_marginTop="16dp"
         android:textSize="16dp"
         android:layout_below="@+id/takenMoney"
-        android:onClick="calculateThis"
+
         android:width="150dp"/>
-
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <TextView
+        android:id="@+id/text_income"
+        android:text="@string/text_for_income"
+        android:textSize="14dp"
         android:layout_below="@id/calc_button"
-        android:rowCount="6"
-        android:columnCount="2">
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_column="0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/text_income"
-            android:text="@string/text_for_income"
-            android:textSize="14dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="10dp"
-            android:layout_column="0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/income"
+        android:textSize="14dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="16dp"
+        android:layout_alignBaseline="@id/text_income"
+        android:textAlignment="textEnd"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/text_clear_income"
+        android:text="@string/text_for_clear_income"
+        android:textSize="14dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_below="@id/text_income"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/income"
-            android:textSize="14dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="16dp"
+    <TextView
+        android:id="@+id/clear_income"
+        android:textSize="14dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="right"
+        android:layout_marginRight="16dp"
+        android:layout_alignBaseline="@id/text_clear_income"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/text_commission"
+        android:text="@string/comission"
+        android:textSize="14dp"
+        android:layout_below="@id/text_clear_income"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-            android:textAlignment="textEnd"
-            android:layout_gravity="fill"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/text_clear_income"
-            android:text="@string/text_for_clear_income"
-            android:textSize="14dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginRight="16dp"
+        android:id="@+id/commission"
+        android:textSize="14dp"
+        android:layout_alignBaseline="@id/text_commission"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/text_gasoline"
+        android:layout_below="@id/text_commission"
+        android:text="@string/expense_on_gasoline"
+        android:textSize="14dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content" />
 
-        <TextView
-            android:id="@+id/clear_income"
-            android:textSize="14dp"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="right"
-            android:layout_marginRight="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/text_commission"
-            android:text="@string/comission"
-            android:textSize="14dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/expence_gasoline"
+        android:textSize="14dp"
+        android:layout_alignBaseline="@id/text_gasoline"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="right"
+        android:layout_marginRight="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-        <TextView
-            android:layout_marginRight="16dp"
-            android:id="@+id/commission"
-            android:textSize="14dp"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/text_gasoline"
-            android:text="@string/expense_on_gasoline"
-            android:textSize="14dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="16dp"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content" />
+    <Button
+        android:id="@+id/save"
 
-        <TextView
-            android:id="@+id/expence_gasoline"
-            android:textSize="14dp"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="right"
-            android:layout_marginRight="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:layout_width="178dp"
-            android:layout_height="180dp"
-            app:srcCompat="@drawable/img0001"
-            android:layout_marginTop="20dp"
-            android:id="@+id/imageView4" />
-        <Button
-
-            android:id="@+id/save"
-            android:onClick="saveInSQL"
-            android:layout_gravity="center"
-            android:text="@string/save"
-            android:textSize="18dp"
-            android:height="60dp"
-            android:width="150dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </GridLayout>
-
-    <!--<Button
-        android:id="@+id/cancel_button"
-        android:onClick="cancelInfo"
         android:layout_gravity="center"
-        android:text="@string/cancel"
-        android:textSize="16dp"
-        android:height="40dp"
+        android:text="@string/save"
+        android:textSize="14dp"
+        android:height="60dp"
+        android:width="150dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/eMoney"
-        android:layout_alignBaseline="@id/calc_button"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="16dp"
-        android:width="150dp"/> -->
+        android:layout_below="@id/text_gasoline"
+        android:layout_toEndOf="@+id/imageView4"
+        android:layout_marginTop="37dp" />
+
+    <ImageView
+        android:layout_width="178dp"
+        android:layout_height="180dp"
+        app:srcCompat="@drawable/img0001"
+        android:id="@+id/imageView4"
+        android:layout_below="@id/text_gasoline"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

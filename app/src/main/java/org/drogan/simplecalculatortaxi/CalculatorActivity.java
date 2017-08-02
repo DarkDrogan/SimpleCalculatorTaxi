@@ -1,13 +1,18 @@
 package org.drogan.simplecalculatortaxi;
 
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.drogan.simplecalculatortaxi.SQL.TaxiDBHelper;
 
 public class CalculatorActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -15,8 +20,8 @@ public class CalculatorActivity extends AppCompatActivity implements View.OnClic
     public static final String COST_GASOLINE = "COST_GASOLINE";
 
     private double aFuel;
-    private double aMoney;
-    private double aDistanse;
+    private double earnedMoney;
+    private double distanse;
     private double aCostFuel;
     private EditText moneyET;
     private EditText fuelET;
@@ -26,6 +31,11 @@ public class CalculatorActivity extends AppCompatActivity implements View.OnClic
     private TextView clearIncomeTV;
     Button saveInSQlButton, calculateButton;
     SharedPreferences sPref;
+    private double moneyOnFuel;
+    private double infoStatistic;
+    private double percent;
+    private SQLiteDatabase db;
+    private TaxiDBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,15 +85,46 @@ public class CalculatorActivity extends AppCompatActivity implements View.OnClic
             case R.id.calc_button: calculateThis();
                 break;
             case R.id.save: saveInSQL();
+                break;
+            /*case R.id.read:
+                readSQL();
+                break;*/
         }
     }
 
 
-    public void saveInSQL(){
+    private void saveInSQL(){
         //NOP
+        dbHelper = new TaxiDBHelper(CalculatorActivity.this);
+        db = dbHelper.getWritableDatabase();
+        TaxiDBHelper.insertData(db, (int)earnedMoney, aFuel, aCostFuel, distanse);
+        Toast.makeText(CalculatorActivity.this, "saved", Toast.LENGTH_SHORT).show();
     }
 
-    public void calculateThis(){
+    protected void OnClickReadSQL(View view){
+        /*db.delete(TaxiDBHelper.TABLE_INCOME, null, null);
+        Toast.makeText(CalculatorActivity.this, "Database was deleted", Toast.LENGTH_SHORT).show();*/
+        Cursor cursor = db.query(TaxiDBHelper.TABLE_INCOME, null, null, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            int idIndex = cursor.getColumnIndex(TaxiDBHelper.KEY_ID);
+            int nameIndex = cursor.getColumnIndex(TaxiDBHelper.KEY_DATE);
+            int emailIndex = cursor.getColumnIndex(TaxiDBHelper.KEY_TIME);
+            int earnedMoneyIndex = cursor.getColumnIndex(TaxiDBHelper.KEY_EARNED_MONEY);
+            do {
+                Log.d("mLog", "ID = " + cursor.getInt(idIndex) +
+                        ", " + cursor.getString(nameIndex) +
+                        ", " + cursor.getString(emailIndex) +
+                ", money: " + cursor.getString(earnedMoneyIndex));
+            } while (cursor.moveToNext());
+        } else
+            Log.d("mLog","0 rows");
+
+        cursor.close();
+    }
+
+
+    private void calculateThis(){
 
 
         final TextView expenceOnGasoline = (TextView) findViewById(R.id.expence_gasoline);
@@ -98,21 +139,21 @@ public class CalculatorActivity extends AppCompatActivity implements View.OnClic
             aCostFuel = 0;
         }
         try {
-            aDistanse = Double.parseDouble(distanseET.getText().toString());
+            distanse = Double.parseDouble(distanseET.getText().toString());
         } catch (NumberFormatException e) {
-            aDistanse = 0;
+            distanse = 0;
             distanseET.setText(String.format("%4.1f", 0f));
         }
 
         try {
-            aMoney = Double.parseDouble(moneyET.getText().toString());
+            earnedMoney = Double.parseDouble(moneyET.getText().toString());
         } catch (NumberFormatException e) {
-            aMoney = 0;
+            earnedMoney = 0;
             moneyET.setText(String.format("%4.2f", 0f));
         }
-        double moneyOnFuel = (aFuel / 100.0 * aDistanse * aCostFuel);
-        double infoStatistic = aMoney - moneyOnFuel;
-        double percent = aMoney / 100.0 * 15;
+        moneyOnFuel = (aFuel / 100.0 * distanse * aCostFuel);
+        infoStatistic = earnedMoney - moneyOnFuel;
+        percent = earnedMoney / 100.0 * 15;
 
         String incomeString = String.format("%4.2f", infoStatistic);
         incomeTV.setText(incomeString);

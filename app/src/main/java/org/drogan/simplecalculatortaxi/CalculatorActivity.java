@@ -28,20 +28,27 @@ public class CalculatorActivity extends AppCompatActivity implements View.OnClic
     private EditText costFuelET;
     private EditText distanseET;
     private TextView incomeTV;
-    private TextView clearIncomeTV;
+    private TextView profitTV;
     Button saveInSQlButton, calculateButton;
     SharedPreferences sPref;
     private double moneyOnFuel;
-    private double infoStatistic;
+    private double income;
     private double percent;
     private SQLiteDatabase db;
     private TaxiDBHelper dbHelper;
+    private double profit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
 
+
+        initialVariables();
+        onStarted();
+    }
+
+    private void initialVariables() {
         saveInSQlButton = (Button) findViewById(R.id.save);
         saveInSQlButton.setOnClickListener(this);
         calculateButton = (Button) findViewById(R.id.calc_button);
@@ -52,8 +59,8 @@ public class CalculatorActivity extends AppCompatActivity implements View.OnClic
         costFuelET = (EditText) findViewById(R.id.eCostFuel);
         distanseET = (EditText) findViewById(R.id.eDistanse);
         incomeTV = (TextView) findViewById(R.id.income);
-        clearIncomeTV = (TextView) findViewById(R.id.clear_income);
-        onStarted();
+        profitTV = (TextView) findViewById(R.id.clear_income);
+        dbHelper = new TaxiDBHelper(CalculatorActivity.this);
     }
 
 
@@ -95,15 +102,17 @@ public class CalculatorActivity extends AppCompatActivity implements View.OnClic
 
     private void saveInSQL(){
         //NOP
-        dbHelper = new TaxiDBHelper(CalculatorActivity.this);
+
         db = dbHelper.getWritableDatabase();
         TaxiDBHelper.insertData(db, (int)earnedMoney, aFuel, aCostFuel, distanse);
         Toast.makeText(CalculatorActivity.this, "saved", Toast.LENGTH_SHORT).show();
+        db.close();
     }
 
-    protected void OnClickReadSQL(View view){
+    protected void readSQL(View view){
         /*db.delete(TaxiDBHelper.TABLE_INCOME, null, null);
         Toast.makeText(CalculatorActivity.this, "Database was deleted", Toast.LENGTH_SHORT).show();*/
+        db = dbHelper.getReadableDatabase();
         Cursor cursor = db.query(TaxiDBHelper.TABLE_INCOME, null, null, null, null, null, null);
 
         if (cursor.moveToFirst()) {
@@ -117,10 +126,14 @@ public class CalculatorActivity extends AppCompatActivity implements View.OnClic
                         ", " + cursor.getString(emailIndex) +
                 ", money: " + cursor.getString(earnedMoneyIndex));
             } while (cursor.moveToNext());
-        } else
-            Log.d("mLog","0 rows");
+            Toast.makeText(CalculatorActivity.this, "readed", Toast.LENGTH_SHORT).show();
+        } else {
+            Log.d("mLog", "0 rows");
+            Toast.makeText(CalculatorActivity.this, "readed, table is clear", Toast.LENGTH_SHORT).show();
+        }
 
         cursor.close();
+        db.close();
     }
 
 
@@ -152,12 +165,13 @@ public class CalculatorActivity extends AppCompatActivity implements View.OnClic
             moneyET.setText(String.format("%4.2f", 0f));
         }
         moneyOnFuel = (aFuel / 100.0 * distanse * aCostFuel);
-        infoStatistic = earnedMoney - moneyOnFuel;
+        income = earnedMoney - moneyOnFuel;
         percent = earnedMoney / 100.0 * 15;
+        profit = income >= 0 ? (income - percent) : 0;
 
-        String incomeString = String.format("%4.2f", infoStatistic);
+        String incomeString = String.format("%4.2f", income);
         incomeTV.setText(incomeString);
-        clearIncomeTV.setText(String.format("%4.2f", infoStatistic != 0 ? infoStatistic - percent : infoStatistic));
+        profitTV.setText(String.format("%4.2f", profit));
         comission.setText(String.format("%4.2f", percent));
         expenceOnGasoline.setText(String.format("%4.2f", moneyOnFuel));
     }

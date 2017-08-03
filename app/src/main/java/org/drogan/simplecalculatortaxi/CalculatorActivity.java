@@ -12,7 +12,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.drogan.simplecalculatortaxi.SQL.TaxiDBExecute;
 import org.drogan.simplecalculatortaxi.SQL.TaxiDBHelper;
+
+import static org.drogan.simplecalculatortaxi.SQL.TaxiDBExecute.*;
 
 public class CalculatorActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -101,12 +104,9 @@ public class CalculatorActivity extends AppCompatActivity implements View.OnClic
 
 
     private void saveInSQL(){
-        //NOP
-
-        db = dbHelper.getWritableDatabase();
-        TaxiDBHelper.insertData(db, (int)earnedMoney, aFuel, aCostFuel, distanse);
+        initialSQLforWrite(CalculatorActivity.this);
+        insertData((int)earnedMoney, aFuel, aCostFuel, distanse);
         Toast.makeText(CalculatorActivity.this, "saved", Toast.LENGTH_SHORT).show();
-        db.close();
     }
 
     protected void readSQL(View view){

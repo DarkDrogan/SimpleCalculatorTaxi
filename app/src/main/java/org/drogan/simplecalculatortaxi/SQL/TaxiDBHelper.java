@@ -43,18 +43,5 @@ public class TaxiDBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public static void insertData(SQLiteDatabase db, int earnedMoney, double expenseGasoline, double costOfGasoline,
-                                  double distanse){
-        ContentValues contentValues = new ContentValues();
-        Date date = new Date();
-        DateFormat dateFormat = DateFormat.getDateInstance();
-        contentValues.put(KEY_DATE, dateFormat.format(date));
-        dateFormat = DateFormat.getTimeInstance();
-        contentValues.put(KEY_TIME, dateFormat.format(date));
-        contentValues.put(KEY_EARNED_MONEY, earnedMoney);
-        contentValues.put(KEY_DISTANSE, distanse);
-        contentValues.put(KEY_EXPENSE_GASOLINE, expenseGasoline);
-        contentValues.put(KEY_COST_GASOLINE_ON_TIME, costOfGasoline);
-        db.insert(TABLE_INCOME, null, contentValues);
-    }
+
 }

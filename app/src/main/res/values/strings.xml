@@ -11,4 +11,5 @@
     <string name="comission">Комиссия приложения</string>
     <string name="cancel">Сбросить</string>
     <string name="save">Сохранить</string>
+    <string name="back">Назад</string>
 </resources>

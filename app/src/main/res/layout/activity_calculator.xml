@@ -219,14 +219,25 @@
         android:layout_alignParentStart="true" />
 
     <Button
-        android:text="read"
+        android:text="clear DB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/save"
         android:layout_toStartOf="@+id/expence_gasoline"
         android:layout_marginEnd="18dp"
         android:layout_marginTop="7dp"
-        android:id="@+id/read"
-        android:onClick="readSQL"/>
+        android:id="@+id/read"/>
+        <!--android:onClick="readSQL"-->
+
+
+    <Button
+        android:text="Open table"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/calc_button"
+        android:layout_toEndOf="@+id/imageView4"
+        android:layout_marginStart="13dp"
+        android:id="@+id/setPercent"
+        android:onClick="setPercent"/>
 
 </RelativeLayout>

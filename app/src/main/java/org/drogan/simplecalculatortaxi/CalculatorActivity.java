@@ -3,8 +3,8 @@ package org.drogan.simplecalculatortaxi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +14,10 @@ import android.widget.Toast;
 import org.drogan.simplecalculatortaxi.Logic.CalculationTemporaryExpenseOfGasoline;
 import org.drogan.simplecalculatortaxi.SQL.TaxiDBHelper;
 
-import static org.drogan.simplecalculatortaxi.SQL.TaxiDBExecute.*;
+import static org.drogan.simplecalculatortaxi.SQL.TaxiDBExecute.initialSQLForRead;
+import static org.drogan.simplecalculatortaxi.SQL.TaxiDBExecute.initialSQLForWrite;
+import static org.drogan.simplecalculatortaxi.SQL.TaxiDBExecute.insertData;
+import static org.drogan.simplecalculatortaxi.SQL.TaxiDBExecute.readDataButNowItDeleteDataBase;
 
 public class CalculatorActivity extends AppCompatActivity implements View.OnClickListener {
 

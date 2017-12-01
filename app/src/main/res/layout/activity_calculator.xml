@@ -103,24 +103,48 @@
         android:layout_marginRight="16dp"
         android:layout_marginEnd="16dp"
         />
-    <Button
-        android:id="@+id/calc_button"
-        android:text="@string/calculate"
+    <TextView
+        android:id="@+id/tips"
+        android:text="@string/tips"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:textSize="16sp"
         android:layout_below="@+id/takenMoney"
+        />
+    <EditText
+        android:id="@+id/eTips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:layout_alignBaseline="@+id/tips"
+        android:ems="3"
+        android:textSize="16sp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        />
+    <!--
+    <Button
+        android:id="@+id/calc_button"
+        android:text="@string/calculate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="66dp"
+        android:textSize="16sp"
+        android:layout_below="@+id/takenMoney"
 
         android:width="150dp"/>
+        -->
     <TextView
         android:id="@+id/text_income"
         android:text="@string/text_for_income"
         android:textSize="14sp"
-        android:layout_below="@id/calc_button"
+        android:layout_below="@id/eTips"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_column="0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -196,6 +220,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+
+
+    <ImageView
+        android:layout_width="178dp"
+        android:layout_height="180dp"
+        app:srcCompat="@drawable/img0001"
+        android:id="@+id/imageView4"
+        android:layout_below="@id/text_gasoline"
+        android:layout_alignParentStart="true" />
     <Button
         android:id="@+id/save"
 
@@ -206,30 +239,15 @@
         android:width="150dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/imageView4"
         android:layout_below="@id/text_gasoline"
         android:layout_toEndOf="@+id/imageView4"
-        android:layout_marginTop="37dp" />
-
-    <ImageView
-        android:layout_width="178dp"
-        android:layout_height="180dp"
-        app:srcCompat="@drawable/img0001"
-        android:id="@+id/imageView4"
-        android:layout_below="@id/text_gasoline"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:text="clear DB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/save"
-        android:layout_toStartOf="@+id/expence_gasoline"
-        android:layout_marginEnd="18dp"
-        android:layout_marginTop="7dp"
-        android:id="@+id/read"/>
-        <!--android:onClick="readSQL"-->
+        android:layout_marginTop="60dp" />
 
 
+    <!--android:onClick="readSQL"-->
+
+<!--
     <Button
         android:text="Open table"
         android:layout_width="wrap_content"
@@ -239,5 +257,6 @@
         android:layout_marginStart="13dp"
         android:id="@+id/setPercent"
         android:onClick="setPercent"/>
+        -->
 
 </RelativeLayout>

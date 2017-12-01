@@ -62,7 +62,11 @@ public class TaxiDBExecute {
     }
 
     public static void readDataButNowItDeleteDataBase(){
-        db.delete(TaxiDBHelper.TABLE_INCOME, null, null);
+
+        //DON'T USE THIS
+        /*db.delete(TaxiDBHelper.TABLE_INCOME, null, null);*/
+
+
 //        Toast.makeText(CalculatorActivity.this, "Database was deleted", Toast.LENGTH_SHORT).show();
         /*Cursor cursor = db.query(TaxiDBHelper.TABLE_INCOME, null, null, null, null, null, null);
 

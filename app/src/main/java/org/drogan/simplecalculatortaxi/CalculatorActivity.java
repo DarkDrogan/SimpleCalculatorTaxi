@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,6 +52,8 @@ public class CalculatorActivity extends AppCompatActivity implements View.OnClic
     private SQLiteDatabase db;
     private TaxiDBHelper dbHelper;
     private CalculationTemporaryExpenseOfGasoline cc;
+    private EditText mTipsET;
+    private float tips;
 
 
     @Override
@@ -65,8 +69,8 @@ public class CalculatorActivity extends AppCompatActivity implements View.OnClic
     private void initialVariables() {
         saveInSQlButton = (Button) findViewById(R.id.save);
         saveInSQlButton.setOnClickListener(this);
-        calculateButton = (Button) findViewById(R.id.calc_button);
-        calculateButton.setOnClickListener(this);
+       /* calculateButton = (Button) findViewById(R.id.calc_button);
+        calculateButton.setOnClickListener(this);*/
         /*readSQLButton = (Button) findViewById(R.id.read);
         readSQLButton.setOnClickListener(this);*/
 
@@ -74,6 +78,7 @@ public class CalculatorActivity extends AppCompatActivity implements View.OnClic
         fuelET = (EditText) findViewById(R.id.eFuel);
         costFuelET = (EditText) findViewById(R.id.eCostFuel);
         distanseET = (EditText) findViewById(R.id.eDistanse);
+        mTipsET = (EditText) findViewById(R.id.eTips);
 
         incomeTV = (TextView) findViewById(R.id.income);
         profitTV = (TextView)  findViewById(R.id.clear_income);
@@ -82,6 +87,27 @@ public class CalculatorActivity extends AppCompatActivity implements View.OnClic
 
         dbHelper = new TaxiDBHelper(CalculatorActivity.this);
         cc = new CalculationTemporaryExpenseOfGasoline();
+        TextWatcher tw = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                calculateThis();
+            }
+        };
+        moneyET.addTextChangedListener(tw);
+        fuelET.addTextChangedListener(tw);
+        costFuelET.addTextChangedListener(tw);
+        distanseET.addTextChangedListener(tw);
+        mTipsET.addTextChangedListener(tw);
     }
 
 
@@ -100,7 +126,7 @@ public class CalculatorActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     protected void onStop() {
-        super.onPause();
+        super.onStop();
         sPref = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor editor = sPref.edit();
         editor.putString(EXPENSE_GASOLINE, fuelET.getText().toString().replace(",", "."));
@@ -112,8 +138,8 @@ public class CalculatorActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.calc_button: calculateThis();
-                break;
+            /*case R.id.calc_button: calculateThis();
+                break;*/
             case R.id.save: saveInSQL();
                 break;
             /*case R.id.read:
@@ -149,14 +175,11 @@ public class CalculatorActivity extends AppCompatActivity implements View.OnClic
 
 
     private void calculateThis(){
-
-
-
         parseEditableText();
 
-        String incomeString = String.format("%4.2f", cc.getIncome());
+        String incomeString = String.format("%4.2f", cc.getIncome() + tips);
         incomeTV.setText(incomeString);
-        profitTV.setText(String.format("%4.2f", cc.getProfit()));
+        profitTV.setText(String.format("%4.2f", cc.getProfit() + tips));
         comissionTV.setText(String.format("%4.2f", cc.getWastedMoneyOfPercent()));
         expenseOnGasolineTV.setText(String.format("%4.2f", cc.getExpenseOnGasoline()));
     }
@@ -167,21 +190,27 @@ public class CalculatorActivity extends AppCompatActivity implements View.OnClic
             costOfFuel = Float.parseFloat(costFuelET.getText().toString().replace(",", "."));
         }catch (NumberFormatException e){
             averageExpenseGasoline = 0;
-            fuelET.setText(String.format("%4.1f", 0f));
+            /*fuelET.setText(String.format("%1.0f", 0f));*/
             costOfFuel = 0;
         }
         try {
             distanse = Float.parseFloat(distanseET.getText().toString());
         } catch (NumberFormatException e) {
             distanse = 0;
-            distanseET.setText(String.format("%4.1f", 0f));
+            /*distanseET.setText(String.format("%1.0f", 0f));*/
+        }
+        try {
+            tips = Float.parseFloat(mTipsET.getText().toString().replace(",", "."));
+        } catch (NumberFormatException e) {
+            tips = 0;
+            /*mTipsET.setText(String.format("%1.0f", 0f));*/
         }
 
         try {
             earnedMoney = Float.parseFloat(moneyET.getText().toString());
         } catch (NumberFormatException e) {
             earnedMoney = 0;
-            moneyET.setText(String.format("%4.2f", 0f));
+            /*moneyET.setText(String.format("%1.0f", 0f));*/
         }
         cc.setVariablesAndCalculateData(averageExpenseGasoline, earnedMoney, distanse, costOfFuel, percentForApplication);
     }

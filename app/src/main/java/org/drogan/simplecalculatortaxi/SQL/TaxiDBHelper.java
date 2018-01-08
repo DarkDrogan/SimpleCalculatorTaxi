@@ -1,12 +1,8 @@
 package org.drogan.simplecalculatortaxi.SQL;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import java.text.DateFormat;
-import java.util.Date;
 
 
 public class TaxiDBHelper extends SQLiteOpenHelper {
@@ -39,7 +35,7 @@ public class TaxiDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop table if exist " + TABLE_INCOME);
+        db.execSQL("drop table if exists " + TABLE_INCOME);
         onCreate(db);
     }
 

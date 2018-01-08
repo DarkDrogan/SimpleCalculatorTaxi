@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="shift"
+            type="org.drogan.simplecalculatortaxi.model.Shift"/>
+    </data>
+<RelativeLayout
     android:id="@+id/activity_calculator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,7 +13,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="org.drogan.simplecalculatortaxi.CalculatorActivity">
+    >
 
     <TextView
         android:text="@string/distance"
@@ -33,6 +37,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginRight="16dp"
         android:layout_marginEnd="16dp"
+        android:text="@{shift.distance}"
         />
     <TextView
         android:id="@+id/restoredFuel"
@@ -52,10 +57,10 @@
         android:layout_alignBaseline="@+id/restoredFuel"
         android:ems="3"
         android:textSize="16sp"
-        android:text="8.5"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="16dp"
         android:layout_marginEnd="16dp"
+        android:text="@{shift.expenceGasoline}"
         />
     <TextView
         android:id="@+id/costFuel"
@@ -74,7 +79,7 @@
         android:inputType="numberDecimal"
         android:layout_alignBaseline="@+id/costFuel"
         android:ems="3"
-        android:text="41.40"
+        android:text="@{shift.costGasoline}"
         android:textSize="16sp"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="16dp"
@@ -98,6 +103,7 @@
         android:inputType="numberDecimal"
         android:layout_alignBaseline="@+id/takenMoney"
         android:ems="3"
+        android:text="@{shift.earning}"
         android:textSize="16sp"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="16dp"
@@ -124,6 +130,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginRight="16dp"
         android:layout_marginEnd="16dp"
+        android:text="@{shift.tips}"
         />
     <!--
     <Button
@@ -142,7 +149,7 @@
         android:id="@+id/text_income"
         android:text="@string/text_for_income"
         android:textSize="14sp"
-        android:layout_below="@id/eTips"
+        android:layout_below="@id/tips"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="20dp"
         android:layout_column="0"
@@ -222,7 +229,7 @@
 
 
 
-    <ImageView
+ <!--   <ImageView
         android:layout_width="178dp"
         android:layout_height="180dp"
         app:srcCompat="@drawable/img0001"
@@ -242,7 +249,7 @@
         android:layout_alignBaseline="@+id/imageView4"
         android:layout_below="@id/text_gasoline"
         android:layout_toEndOf="@+id/imageView4"
-        android:layout_marginTop="60dp" />
+        android:layout_marginTop="60dp" />-->
 
 
     <!--android:onClick="readSQL"-->
@@ -260,3 +267,4 @@
         -->
 
 </RelativeLayout>
+</layout>

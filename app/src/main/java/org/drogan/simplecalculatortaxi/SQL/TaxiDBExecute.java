@@ -62,36 +62,11 @@ public class TaxiDBExecute {
     }
 
     public static void readDataButNowItDeleteDataBase(){
-
-        //DON'T USE THIS
-        /*db.delete(TaxiDBHelper.TABLE_INCOME, null, null);*/
-
-
-//        Toast.makeText(CalculatorActivity.this, "Database was deleted", Toast.LENGTH_SHORT).show();
-        /*Cursor cursor = db.query(TaxiDBHelper.TABLE_INCOME, null, null, null, null, null, null);
-
-        if (cursor.moveToFirst()) {
-            int idIndex = cursor.getColumnIndex(TaxiDBHelper.KEY_ID);
-            int nameIndex = cursor.getColumnIndex(TaxiDBHelper.KEY_DATE);
-            int emailIndex = cursor.getColumnIndex(TaxiDBHelper.KEY_TIME);
-            int earnedMoneyIndex = cursor.getColumnIndex(TaxiDBHelper.KEY_EARNED_MONEY);
-            do {
-                Log.d("mLog", "ID = " + cursor.getInt(idIndex) +
-                        ", " + cursor.getString(nameIndex) +
-                        ", " + cursor.getString(emailIndex) +
-                        ", money: " + cursor.getString(earnedMoneyIndex));
-            } while (cursor.moveToNext());
-        } else {
-            Log.d("mLog", "0 rows");
-        }*/
-
-        /*cursor.close();*/
         db.close();
     }
 
     public static String[] readDataArrayString(){
-        /*db.delete(TaxiDBHelper.TABLE_INCOME, null, null);
-        Toast.makeText(CalculatorActivity.this, "Database was deleted", Toast.LENGTH_SHORT).show();*/
+
         List<String> list = new ArrayList<>();
         int index = 0;
         Cursor cursor = db.query(TaxiDBHelper.TABLE_INCOME, null, null, null, null, null, null);
@@ -138,8 +113,7 @@ public class TaxiDBExecute {
         return strings;
     }
     public static String[] readDataArrayStringProfit(){
-        /*db.delete(TaxiDBHelper.TABLE_INCOME, null, null);
-        Toast.makeText(CalculatorActivity.this, "Database was deleted", Toast.LENGTH_SHORT).show();*/
+
         if(!db.isOpen()){
             initialSQLForRead(context1);
         }
@@ -155,25 +129,13 @@ public class TaxiDBExecute {
         String [] strings = new String[index];
         index = 0;
 
-
-        //if this will be unlocked then +string for array length
-        /*strings[index++] = "date";
-        strings[index++] = "time";
-        strings[index++] = "distance";
-        strings[index++] = "profit";*/
-
         if (cursor.moveToFirst()) {
 
-            int dateIndex = cursor.getColumnIndex(TaxiDBHelper.KEY_DATE);
-            int timeIndex = cursor.getColumnIndex(TaxiDBHelper.KEY_TIME);
             int earnedMoneyIndex = cursor.getColumnIndex(TaxiDBHelper.KEY_EARNED_MONEY);
             int costOfGasolineIndex = cursor.getColumnIndex(TaxiDBHelper.KEY_COST_GASOLINE_ON_TIME);
             int AverageExpenceOfGasolineIndex = cursor.getColumnIndex(TaxiDBHelper.KEY_EXPENSE_GASOLINE);
             int distanseIndex = cursor.getColumnIndex(TaxiDBHelper.KEY_DISTANSE);
             do {
-                /*strings[index++] = (cursor.getString(dateIndex));
-                strings[index++] = (cursor.getString(timeIndex));
-                strings[index++] = (cursor.getString(distanseIndex));*/
                 double expenseOfGasoline = cursor.getDouble(AverageExpenceOfGasolineIndex) / 100 *
                         cursor.getDouble(distanseIndex) * cursor.getDouble(costOfGasolineIndex);
                 int earnedMoney = cursor.getInt(earnedMoneyIndex);
@@ -189,8 +151,7 @@ public class TaxiDBExecute {
         return strings;
     }
     public static String[] readDataArrayStringDate(){
-        /*db.delete(TaxiDBHelper.TABLE_INCOME, null, null);
-        Toast.makeText(CalculatorActivity.this, "Database was deleted", Toast.LENGTH_SHORT).show();*/
+
         List<String> list = new ArrayList<>();
         int index = 0;
         Cursor cursor = db.query(TaxiDBHelper.TABLE_INCOME, null, null, null, null, null, null);
@@ -203,30 +164,11 @@ public class TaxiDBExecute {
         String [] strings = new String[index];
         index = 0;
 
-
-        //if this will be unlocked then +string for array length
-        /*strings[index++] = "date";
-        strings[index++] = "time";
-        strings[index++] = "distance";
-        strings[index++] = "profit";*/
-
         if (cursor.moveToFirst()) {
 
             int dateIndex = cursor.getColumnIndex(TaxiDBHelper.KEY_DATE);
-            int timeIndex = cursor.getColumnIndex(TaxiDBHelper.KEY_TIME);
-            int earnedMoneyIndex = cursor.getColumnIndex(TaxiDBHelper.KEY_EARNED_MONEY);
-            int costOfGasolineIndex = cursor.getColumnIndex(TaxiDBHelper.KEY_COST_GASOLINE_ON_TIME);
-            int AverageExpenceOfGasolineIndex = cursor.getColumnIndex(TaxiDBHelper.KEY_EXPENSE_GASOLINE);
-            int distanseIndex = cursor.getColumnIndex(TaxiDBHelper.KEY_DISTANSE);
             do {
                 strings[index++] = (cursor.getString(dateIndex));
-                /*strings[index++] = (cursor.getString(timeIndex));
-                strings[index++] = (cursor.getString(distanseIndex));*/
-                /*double expenseOfGasoline = cursor.getDouble(AverageExpenceOfGasolineIndex) / 100 *
-                        cursor.getDouble(distanseIndex) * cursor.getDouble(costOfGasolineIndex);
-                int earnedMoney = cursor.getInt(earnedMoneyIndex);
-                double profit = earnedMoney - (earnedMoney / 100 * 15) - expenseOfGasoline;
-                strings[index++] = String.format("%4.2f", profit);*/
             } while (cursor.moveToNext());
         } else {
             Log.d("mLog", "0 rows");

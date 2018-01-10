@@ -1,4 +1,4 @@
-package org.drogan.simplecalculatortaxi;
+package org.drogan.simplecalculatortaxi.Logic;
 
 import android.view.View;
 import android.widget.EditText;

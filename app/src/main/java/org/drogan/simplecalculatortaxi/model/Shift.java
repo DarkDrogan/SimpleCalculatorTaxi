@@ -1,75 +1,71 @@
 package org.drogan.simplecalculatortaxi.model;
 
+import java.util.Date;
+
 public class Shift {
 
-    private String mEarning;
-    private String mDistance;
-    private String mTips;
-    private String mExpenceGasoline;
-    private String mCostGasoline;
-    private static Shift mShift;
+    private float mEarning;
+    private float mDistance;
+    private float mTips;
+    private float mExpenceGasoline;
+    private float mCostGasoline;
+    private Date mDateShift;
 
-    public Shift(){
-        new Shift(mEarning, mDistance, mTips, mExpenceGasoline, mCostGasoline);
-    }
-
-    public Shift(String earning, String distance, String tips, String expenceGasoline, String costGasoline) {
+    public Shift(float earning, float distance, float tips, float expenceGasoline, float costGasoline) {
         mEarning = earning;
         mDistance = distance;
         mTips = tips;
         mExpenceGasoline = expenceGasoline;
         mCostGasoline = costGasoline;
+        mDateShift = new Date();
+
     }
 
-    public static Shift getShift() {
-        return new Shift();
+    public void setDateShift(Date dateShift) {
+        mDateShift = dateShift;
     }
 
-    public void setShift(Shift shift) {
-        mShift = shift;
+    public Date getDateShift() {
+        return mDateShift;
     }
 
-    public String getEarning() {
+    public float getEarning() {
         return mEarning;
     }
 
-    public void setEarning(){
-        setEarning("0");
-    }
-
-    public void setEarning(String earning) {
+    public void setEarning(float earning) {
         mEarning = earning;
     }
 
-    public String getDistance() {
+    public float getDistance() {
         return mDistance;
     }
 
-    public void setDistance(String distance) {
+    public void setDistance(float distance) {
         mDistance = distance;
     }
 
-    public String getTips() {
+    public float getTips() {
         return mTips;
     }
 
-    public void setTips(String tips) {
+    public void setTips(float tips) {
         mTips = tips;
     }
 
-    public String getExpenceGasoline() {
+    public float getExpenceGasoline() {
         return mExpenceGasoline;
     }
 
-    public void setExpenceGasoline(String expenceGasoline) {
+    public void setExpenceGasoline(float expenceGasoline) {
         mExpenceGasoline = expenceGasoline;
     }
 
-    public String getCostGasoline() {
+    public float getCostGasoline() {
         return mCostGasoline;
     }
 
-    public void setCostGasoline(String costGasoline) {
+    public void setCostGasoline(float costGasoline) {
         mCostGasoline = costGasoline;
     }
 }

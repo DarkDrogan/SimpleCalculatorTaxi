@@ -1,5 +1,7 @@
 package org.drogan.simplecalculatortaxi.Logic;
 
+import org.drogan.simplecalculatortaxi.model.Shift;
+
 public class CalculationTemporaryExpenseOfGasoline {
 
 
@@ -12,17 +14,30 @@ public class CalculationTemporaryExpenseOfGasoline {
 
     private float expenseOnGasoline;
     private float income;
-    private float percentForApplication;
+    private float percentForApplication = 15;
     private float wastedMoneyOfPercent;
     private float profit;
 
-
-    public static void main(String[] args) {
-        CalculationTemporaryExpenseOfGasoline calc = new CalculationTemporaryExpenseOfGasoline();
-        System.out.println(calc.getIntervalExpenseGasoline(0f, 0f, 610f, 9.3f));
+    public CalculationTemporaryExpenseOfGasoline(){
     }
 
-    public CalculationTemporaryExpenseOfGasoline(){
+    public CalculationTemporaryExpenseOfGasoline(float startDistance, float startExpenseGasoline){
+        this.startDistance = startDistance;
+        this.startExpenseGasoline = startExpenseGasoline;
+    }
+
+    //TODO: change four parameters on Shift class or include calculation and getters into the Shift class
+    public void setVariablesAndCalculateData(Shift shift){
+        this.averageExpenseGasoline = shift.getExpenceGasoline();
+        this.earnedMoney = shift.getEarning();
+        this.distanse = shift.getDistance();
+        this.costOfFuel = shift.getDistance();
+        //here was percent for application
+
+        expenseOnGasoline = (averageExpenseGasoline / 100.0f * distanse * costOfFuel);
+        income = earnedMoney - expenseOnGasoline;
+        wastedMoneyOfPercent = earnedMoney / 100.0f * percentForApplication;
+        profit = income >= 0 ? (income - wastedMoneyOfPercent) : 0;
     }
 
     public void setVariablesAndCalculateData(float averageExpenseGasoline, float earnedMoney,
@@ -61,18 +76,13 @@ public class CalculationTemporaryExpenseOfGasoline {
         return profit;
     }
 
-    public CalculationTemporaryExpenseOfGasoline(float startDistance, float startExpenseGasoline){
-        this.startDistance = startDistance;
-        this.startExpenseGasoline = startExpenseGasoline;
-    }
-
     /** if method returned float less zero, then we need initialize another
      * constructor or use overload method with start distance and start expense gasoline
      * @param currentDistance
      * @param currentExpenseGasoline
      * @return float current distance
      */
-    public float getIntervalExpenseGasoline(float currentDistance, float currentExpenseGasoline){
+    public float getIntervalGasolineExpense(float currentDistance, float currentExpenseGasoline){
         //get from start application shift taxi
 
         //what will return
@@ -88,7 +98,7 @@ public class CalculationTemporaryExpenseOfGasoline {
         return intervalExpenseGasoline;
     }
 
-    public float getIntervalExpenseGasoline(float startDistance, float startExpenseGasoline,
+    public float getIntervalGasolineExpense(float startDistance, float startExpenseGasoline,
                                             float currentDistance, float currentExpenseGasoline){
         //get from start application shift taxi
 

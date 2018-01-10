@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.drogan.simplecalculatortaxi.Logic.CalculationTemporaryExpenseOfGasoline;
+import org.drogan.simplecalculatortaxi.Logic.EditTextViewCleanerListener;
 import org.drogan.simplecalculatortaxi.SQL.TaxiDBHelper;
 import org.drogan.simplecalculatortaxi.model.Shift;
 
@@ -58,7 +60,6 @@ public class NowMainFragment extends Fragment {
     private CalculationTemporaryExpenseOfGasoline cc;
     private EditText mTipsET;
     private float tips;
-    private String mX;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,30 +70,24 @@ public class NowMainFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-
         View v = inflater.inflate(R.layout.activity_calculator, container, false);
 
+
         initialVariables();
-        onStarted();
         EditTextViewCleanerListener etvc = new EditTextViewCleanerListener();
-        Shift shift = Shift.getShift();
-        mX = shift.getEarning();
-        System.out.println(mX);
+
 
 
         moneyET = (EditText) v.findViewById(R.id.eMoney);
         fuelET = (EditText) v.findViewById(R.id.eFuel);
         costFuelET = (EditText) v.findViewById(R.id.eCostFuel);
-
         distanseET = (EditText) v.findViewById(R.id.eDistanse);
         mTipsET = (EditText) v.findViewById(R.id.eTips);
-
         incomeTV = (TextView) v.findViewById(R.id.income);
         profitTV = (TextView)  v.findViewById(R.id.clear_income);
         expenseOnGasolineTV = (TextView) v.findViewById(R.id.expence_gasoline);
         comissionTV = (TextView) v.findViewById(R.id.commission);
-        //saveInSQlButton = (Button) v.findViewById(R.id.save);
-//        saveInSQlButton.setOnClickListener(this);
+
         distanseET.setOnFocusChangeListener(etvc);
         moneyET.setOnFocusChangeListener(etvc);
         mTipsET.setOnFocusChangeListener(etvc);
@@ -111,7 +106,6 @@ public class NowMainFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 calculateThis();
-                System.out.println(mX);
             }
         };
 
@@ -136,23 +130,8 @@ public class NowMainFragment extends Fragment {
 
 
     private void initialVariables() {
-
-       /* calculateButton = (Button) findViewById(R.id.calc_button);
-        calculateButton.setOnClickListener(this);*/
-        /*readSQLButton = (Button) findViewById(R.id.read);
-        readSQLButton.setOnClickListener(this);*/
-
-
-
         dbHelper = new TaxiDBHelper(this.getContext());
         cc = new CalculationTemporaryExpenseOfGasoline();
-
-    }
-
-
-    protected void onStarted() {
-        /*super.onStart();
-        */
     }
 
     @Override
@@ -182,7 +161,7 @@ public class NowMainFragment extends Fragment {
 
 
     private void calculateThis(){
-        parseEditableText();
+        parseEditableTextLASTVERSION();
 
         String incomeString = String.format("%4.2f", cc.getIncome() + tips);
         incomeTV.setText(incomeString);
@@ -191,34 +170,24 @@ public class NowMainFragment extends Fragment {
         expenseOnGasolineTV.setText(String.format("%4.2f", cc.getExpenseOnGasoline()));
     }
 
-    private void parseEditableText() {
-        try {
-            averageExpenseGasoline = Float.parseFloat(fuelET.getText().toString().replace(",", "."));
-            costOfFuel = Float.parseFloat(costFuelET.getText().toString().replace(",", "."));
-        }catch (NumberFormatException e){
-            averageExpenseGasoline = 0;
-            /*fuelET.setText(String.format("%1.0f", 0f));*/
-            costOfFuel = 0;
-        }
-        try {
-            distance = Float.parseFloat(distanseET.getText().toString());
-        } catch (NumberFormatException e) {
-            distance = 0;
-            /*distanseET.setText(String.format("%1.0f", 0f));*/
-        }
-        try {
-            tips = Float.parseFloat(mTipsET.getText().toString().replace(",", "."));
-        } catch (NumberFormatException e) {
-            tips = 0;
-            /*mTipsET.setText(String.format("%1.0f", 0f));*/
-        }
+    private void parseEditableTextLASTVERSION() {
+        averageExpenseGasoline = parseEditableText(fuelET);
+        costOfFuel = parseEditableText(costFuelET);
+        distance = parseEditableText(distanseET);
+        tips = parseEditableText(mTipsET);
+        earnedMoney = parseEditableText(moneyET);
+        Shift shift = new Shift(earnedMoney, distance, tips, averageExpenseGasoline, costOfFuel);
+//        cc.setVariablesAndCalculateData(averageExpenseGasoline, earnedMoney, distance, costOfFuel, percentForApplication);
+        cc.setVariablesAndCalculateData(shift);
+    }
 
+    private float parseEditableText(EditText et){
+        float x = 0;
         try {
-            earnedMoney = Float.parseFloat(moneyET.getText().toString());
+            x = Float.parseFloat(et.getText().toString().replace(",", "."));
         } catch (NumberFormatException e) {
-            earnedMoney = 0;
-            /*moneyET.setText(String.format("%1.0f", 0f));*/
+            Log.e("ETAG", "parsing EditText have a NumberFormatException: \n" + e.toString());
         }
-        cc.setVariablesAndCalculateData(averageExpenseGasoline, earnedMoney, distance, costOfFuel, percentForApplication);
+        return x;
     }
 }
